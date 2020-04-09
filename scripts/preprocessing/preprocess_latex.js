@@ -10,22 +10,22 @@ var rl = readline.createInterface({
 
 rl.on('line', function(line){
     a = line
-    if (line[0] == "%") {
+    if (line[0] === "%") {
         line = line.substr(1, line.length - 1);
     }
     line = line.split('%')[0];
 
     line = line.split('\\~').join(' ');
     
-    for (var i = 0; i < 300; i++) {
+    for (let i = 0; i < 300; i++) {
         line = line.replace(/\\>/, " ");
         line = line.replace('$', ' ');
         line = line.replace(/\\label{.*?}/, "");
     }
 
-    if (line.indexOf("matrix") == -1 && line.indexOf("cases")==-1 &&
-        line.indexOf("array")==-1 && line.indexOf("begin")==-1)  {
-        for (var i = 0; i < 300; i++) {
+    if (line.indexOf("matrix") === -1 && line.indexOf("cases")===-1 &&
+        line.indexOf("array")===-1 && line.indexOf("begin")===-1)  {
+        for (let j = 0; j < 300; j++) {
             line = line.replace(/\\\\/, "\\,");
         }
     }
@@ -35,13 +35,11 @@ rl.on('line', function(line){
     // global_str is tokenized version (build in parser.js)
     // norm_str is normalized version build by renderer below.
     try {
-    
-
-        if (process.argv[2] == "tokenize") {
-            var tree = katex.__parse(line, {});
+        if (process.argv[2] === "tokenize") {
+            katex.__parse(line, {});
             console.log(global_str.replace(/\\label { .*? }/, ""));
         } else {
-            for (var i = 0; i < 300; ++i) {
+            for (let i = 0; i < 300; ++i) {
                 line = line.replace(/{\\rm/, "\\mathrm{");
                 line = line.replace(/{ \\rm/, "\\mathrm{");
                 line = line.replace(/\\rm{/, "\\mathrm{");
@@ -49,7 +47,7 @@ rl.on('line', function(line){
 
             var tree = katex.__parse(line, {});
             buildExpression(tree, new options({}));            
-            for (var i = 0; i < 300; ++i) {
+            for (let i = 0; i < 300; ++i) {
                 norm_str = norm_str.replace('SSSSSS', '$');
                 norm_str = norm_str.replace(' S S S S S S', '$');
             }
